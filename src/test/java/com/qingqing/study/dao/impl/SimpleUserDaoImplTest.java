@@ -19,18 +19,19 @@ public class SimpleUserDaoImplTest extends TestBase{
 
     @Test
     public void testInsert() {
-        SimpleUser su = getSimpleUser();
-        simpleUserDao.insert(su);
-
+//        SimpleUser su = getSimpleUser(10);
+//        simpleUserDao.insert(su);
+        SimpleUser su2 = getSimpleUser(20);
+        simpleUserDao.insertWithParam(su2);
         List<SimpleUser> list = simpleUserDao.findAll();
         printJson(list);
     }
 
-    public SimpleUser getSimpleUser() {
+    public SimpleUser getSimpleUser(int value) {
         SimpleUser simpleUser = new SimpleUser();
-        simpleUser.setAge(100);
-        simpleUser.setId(100);
-        simpleUser.setName("name100");
+        simpleUser.setAge(value);
+        simpleUser.setId(value);
+        simpleUser.setName("name" + value);
         return simpleUser;
     }
 }

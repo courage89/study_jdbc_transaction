@@ -1,11 +1,13 @@
 package com.qingqing.study.dao.impl;
 
+import com.qingqing.common.util.JsonUtil;
 import com.qingqing.study.dao.BaseDao;
 import com.qingqing.study.dao.SimpleUserDao;
 import com.qingqing.study.domain.SimpleUser;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.PreparedStatementCallback;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,16 +22,30 @@ import java.util.Map;
 public class SimpleUserDaoImpl extends BaseDao implements SimpleUserDao {
 
     private static final String FINDALL_SQL = "select id, name, age from t_simple_user where is_deleted = 0";
-    private static final String INSERT_SQL = "insert into t_simple_user(id, name, age, is_deleted) VALUE (\":id\", \":name\", \":age\", 0)";
+    private static final String INSERT_SQL = "insert into t_simple_user(id, name, age, is_deleted) VALUE (:id, :name, :age, 0)";
+    private static final String INSERT_SQL_PARAM = "insert into t_simple_user(id, name, age, is_deleted) VALUE (?, ?, ?, 0)";
     private static final String UPDATE_SQL = "update t_simple_user set name = \":name\", age = \":age\" where id=\":id\"";
     private static final String DELETE_SQL = "update t_simple_user set is_deleted = 1 where id=\":id\"";
 
-    public void insert(SimpleUser simpleUser) throws DataAccessException {
+    public void insert(final SimpleUser simpleUser) throws DataAccessException {
 
-        Object execute = getJdbcTemplate().execute(INSERT_SQL, getParams(simpleUser), new PreparedStatementCallback() {
+        Object execute = getJdbcTemplate().execute(INSERT_SQL, new MapSqlParameterSource(getParams(simpleUser)), new PreparedStatementCallback() {
             public Object doInPreparedStatement(PreparedStatement preparedStatement) throws SQLException {
-                System.out.println("update count:" + preparedStatement.getUpdateCount());
-                return null;
+                return preparedStatement.execute();
+            }
+        });
+    }
+
+    /**
+    * 如下方法待调试通过
+    */
+    public void insertWithParam(final SimpleUser simpleUser) throws DataAccessException {
+        Object execute = getJdbcTemplate().execute(INSERT_SQL_PARAM, new HashMap<String, Object>(), new PreparedStatementCallback() {
+            public Object doInPreparedStatement(PreparedStatement preparedStatement) throws SQLException {
+                preparedStatement.setLong(1, simpleUser.getId());
+                preparedStatement.setInt(2, simpleUser.getAge());
+                preparedStatement.setString(3, simpleUser.getName());
+                return preparedStatement.execute();
             }
         });
     }
