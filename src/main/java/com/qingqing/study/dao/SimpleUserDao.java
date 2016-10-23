@@ -12,6 +12,8 @@ public interface SimpleUserDao {
 
     void insert(SimpleUser simpleUser) throws DataAccessException;
 
+    void insertWithIdGenerate(SimpleUser simpleUser);
+
     void insertWithParam(SimpleUser simpleUser) throws DataAccessException;
 
     void update(SimpleUser simpleUser);
