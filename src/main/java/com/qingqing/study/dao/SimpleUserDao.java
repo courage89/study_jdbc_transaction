@@ -21,4 +21,6 @@ public interface SimpleUserDao {
     void deleteById(Long id);
 
     List<SimpleUser> findAll();
+
+    SimpleUser findById(Long id);
 }

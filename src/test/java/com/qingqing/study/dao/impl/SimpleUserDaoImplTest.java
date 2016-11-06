@@ -56,7 +56,6 @@ public class SimpleUserDaoImplTest extends TestBase{
     public SimpleUser getSimpleUser(int value) {
         SimpleUser simpleUser = new SimpleUser();
         simpleUser.setAge(value);
-        simpleUser.setId(value);
         simpleUser.setName("name" + value);
         return simpleUser;
     }

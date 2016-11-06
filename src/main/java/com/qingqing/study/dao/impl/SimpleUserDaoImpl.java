@@ -25,6 +25,7 @@ import java.util.Map;
 public class SimpleUserDaoImpl extends BaseDao implements SimpleUserDao {
 
     private static final String FINDALL_SQL = "select id, name, age from t_simple_user where is_deleted = 0";
+    private static final String FIND_BY_ID_SQL = "select id, name, age from t_simple_user where id = :id";
     private static final String INSERT_SQL = "insert into t_simple_user(name, age, is_deleted) VALUE (:name, :age, 0)";
     private static final String INSERT_SQL_PARAM = "insert into t_simple_user(name, age, is_deleted) VALUE (?, ?, 0)";
     private static final String UPDATE_SQL = "update t_simple_user set name = :name, age = :age where id=:id";
@@ -77,6 +78,11 @@ public class SimpleUserDaoImpl extends BaseDao implements SimpleUserDao {
 
     public List<SimpleUser> findAll() {
         return getJdbcTemplate().query(FINDALL_SQL, new HashMap<String, Object>(0), SIMPLE_USER_MAPPER);
+    }
+
+    public SimpleUser findById(Long id) {
+        List<SimpleUser> list = getJdbcTemplate().query(FIND_BY_ID_SQL, getIdMap(id), SIMPLE_USER_MAPPER);
+        return list.isEmpty() ? null : list.get(0);
     }
 
     private final static RowMapper<SimpleUser> SIMPLE_USER_MAPPER = new RowMapper<SimpleUser>() {

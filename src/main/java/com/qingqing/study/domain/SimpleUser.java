@@ -5,25 +5,25 @@ package com.qingqing.study.domain;
  */
 public class SimpleUser {
 
-    private long id;
+    private Long id;
 
-    private int age;
+    private Integer age;
 
     private String name;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 
