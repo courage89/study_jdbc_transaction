@@ -12,20 +12,20 @@ import org.springframework.transaction.annotation.Transactional;
  * Created by xuya on 2016/11/6.
  */
 @Transactional(value = "atomikosTransactionManager", propagation = Propagation.REQUIRED)
-public class AtomikosTransactionServcieImpl implements TransactionService {
+public class AtomikosTransactionServiceImpl implements TransactionService {
 
     private SimpleUserDao simpleUserDao;
 
     private SimpleCityDao simpleCityDao;
 
-    private TransactionService transactionServcie;
+    private TransactionService transactionService;
 
     public void insert(SimpleUser simpleUser, SimpleCity simpleCity, boolean execFail) {
         simpleCityDao.insertWithIdGenerate(simpleCity);
         simpleUserDao.insertWithIdGenerate(simpleUser);
 
         if (execFail) {
-            throw new RuntimeException("AtomikosTransactionServcieImpl exec insert fail");
+            throw new RuntimeException("AtomikosTransactionServiceImpl exec insert fail");
         }
     }
 
@@ -34,7 +34,7 @@ public class AtomikosTransactionServcieImpl implements TransactionService {
         simpleCityDao.update(simpleCity);
 
         if (execFail) {
-            throw new RuntimeException("AtomikosTransactionServcieImpl exec update fail");
+            throw new RuntimeException("AtomikosTransactionServiceImpl exec update fail");
         }
     }
 
@@ -43,7 +43,7 @@ public class AtomikosTransactionServcieImpl implements TransactionService {
         simpleCityDao.deleteById(cityId);
 
         if (execFail) {
-            throw new RuntimeException("AtomikosTransactionServcieImpl exec delete fail");
+            throw new RuntimeException("AtomikosTransactionServiceImpl exec delete fail");
         }
     }
 
@@ -53,9 +53,9 @@ public class AtomikosTransactionServcieImpl implements TransactionService {
         simpleUser.setAge(simpleUser.getAge() + 100);
         simpleCity.setProvinceId(simpleCity.getProvinceId() + 100);
 
-        transactionServcie.insert(simpleUser, simpleCity, false);
+        transactionService.insert(simpleUser, simpleCity, false);
         if (execFail) {
-            throw new RuntimeException("AtomikosTransactionServcieImpl exec nextedOperate fail");
+            throw new RuntimeException("AtomikosTransactionServiceImpl exec nextedOperate fail");
         }
     }
 
@@ -67,8 +67,8 @@ public class AtomikosTransactionServcieImpl implements TransactionService {
         return simpleCityDao.findById(id);
     }
 
-    public void setTransactionServcie(TransactionService transactionServcie) {
-        this.transactionServcie = transactionServcie;
+    public void setTransactionService(TransactionService transactionService) {
+        this.transactionService = transactionService;
     }
 
     public void setSimpleUserDao(SimpleUserDao simpleUserDao) {

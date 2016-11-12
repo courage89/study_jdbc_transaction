@@ -20,6 +20,10 @@ public class TransactionServiceImplTest extends TestBase {
     private TransactionService transactionService;
 
     @Autowired
+    @Qualifier("jotmTransactionService")
+    private TransactionService jotmTransactionService;
+
+    @Autowired
     @Qualifier("atomikosTransactionService")
     private TransactionService atomikosTransactionService;
 
@@ -49,8 +53,10 @@ public class TransactionServiceImplTest extends TestBase {
 
     @Test
     public void testXaTransactionNestedOperate() throws IllegalAccessException {
-        TransactionService ts = atomikosTransactionService;
 //        TransactionService ts = transactionService;
+        TransactionService ts = jotmTransactionService;
+//        TransactionService ts = atomikosTransactionService;
+
         boolean execFail = true;
         SimpleUser su = getSimpleUser(2);
         SimpleCity sc = getSimpleCity(2);
@@ -59,15 +65,11 @@ public class TransactionServiceImplTest extends TestBase {
         if (su.getId() != null) {
             SimpleUser su1 = ts.findSimpleUserById(su.getId());
             Assert.assertTrue(UnitTestEqualsUtil.isEquals(su, su1, "createTime", "lastUpdateTime"));
-        } else {
-            Assert.fail("insert simpleUser fail");
         }
 
         if (sc.getId() != null) {
             SimpleCity sc1 = ts.findSimpleCityById(sc.getId());
             Assert.assertTrue(UnitTestEqualsUtil.isEquals(sc, sc1, "createTime", "lastUpdateTime"));
-        } else {
-            Assert.fail("insert simpleCity fail");
         }
     }
 

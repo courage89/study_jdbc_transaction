@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
-       xmlns:mvc="http://www.springframework.org/schema/mvc"
-       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
-             http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
-              http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
-              http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
-             http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+
+
+              http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <bean id="propertyConfigurer"
           class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -30,7 +26,30 @@
         <property name="dataSource" ref="qqStudy1DataSource_atomikos"/>
     </bean>
 
-    <bean id="qqStudy1DataSource_atomikos" class="com.atomikos.jdbc.AtomikosDataSourceBean" init-method="init" destroy-method="close">
+    <bean id="simpleUserDao_jotm" class="com.qingqing.study.dao.impl.SimpleUserDaoImpl">
+        <property name="dataSource" ref="qqStudy1DataSource_jotm"/>
+    </bean>
+
+    <bean id="qqStudy1DataSource_jotm" class="org.enhydra.jdbc.pool.StandardXAPoolDataSource"
+          destroy-method="shutdown">
+        <property name="dataSource">
+            <!-- 内部XA数据源 -->
+            <bean class="org.enhydra.jdbc.standard.StandardXADataSource"
+                  destroy-method="shutdown">
+                <property name="transactionManager" ref="jotm"/>
+                <property name="driverName" value="com.mysql.jdbc.Driver"/>
+                <property name="url"
+                          value="jdbc:mysql://db.dev:3307/qq_study_1?useUnicode=true&amp;characterEncoding=UTF-8"/>
+                <property name="user" value="qingqingtst"/>
+                <property name="password" value="qingqing@tst"/>
+            </bean>
+        </property>
+        <property name="user" value="qingqingtst"/>
+        <property name="password" value="qingqing@tst"/>
+    </bean>
+
+    <bean id="qqStudy1DataSource_atomikos" class="com.atomikos.jdbc.AtomikosDataSourceBean" init-method="init"
+          destroy-method="close">
         <property name="uniqueResourceName" value="ds_qq_study_1"/>
         <property name="xaDataSourceClassName" value="com.mysql.jdbc.jdbc2.optional.MysqlXADataSource"/>
         <property name="xaProperties">
@@ -42,11 +61,11 @@
                 <prop key="password">qingqing@tst</prop>
             </props>
         </property>
-        <property name="minPoolSize" value="10" />
-        <property name="maxPoolSize" value="100" />
-        <property name="borrowConnectionTimeout" value="30" />
-        <property name="testQuery" value="select 1" />
-        <property name="maintenanceInterval" value="60" />
+        <property name="minPoolSize" value="10"/>
+        <property name="maxPoolSize" value="100"/>
+        <property name="borrowConnectionTimeout" value="30"/>
+        <property name="testQuery" value="select 1"/>
+        <property name="maintenanceInterval" value="60"/>
     </bean>
 
     <bean id="qqStudy1DataSource" class="org.apache.commons.dbcp.BasicDataSource">
@@ -84,7 +103,7 @@
 
     <bean id="transactionManager1" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <qualifier value="transactionManager1"/>
-        <property name="dataSource" ref="qqStudy1DataSource" />
+        <property name="dataSource" ref="qqStudy1DataSource"/>
     </bean>
     <tx:annotation-driven transaction-manager="transactionManager1"/>
 </beans>

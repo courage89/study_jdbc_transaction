@@ -19,6 +19,28 @@
         <property name="dataSource" ref="qqStudy2DataSource_atomikos"/>
     </bean>
 
+    <bean id="simpleCityDao_jotm" class="com.qingqing.study.dao.impl.SimpleCityDaoImpl">
+        <property name="dataSource" ref="qqStudy2DataSource_jotm"/>
+    </bean>
+
+    <bean id="qqStudy2DataSource_jotm" class="org.enhydra.jdbc.pool.StandardXAPoolDataSource"
+          destroy-method="shutdown">
+        <property name="dataSource">
+            <!-- 内部XA数据源 -->
+            <bean class="org.enhydra.jdbc.standard.StandardXADataSource"
+                  destroy-method="shutdown">
+                <property name="transactionManager" ref="jotm"/>
+                <property name="driverName" value="com.mysql.jdbc.Driver"/>
+                <property name="url"
+                          value="jdbc:mysql://db.dev:3307/qq_study_2?useUnicode=true&amp;characterEncoding=UTF-8"/>
+                <property name="user" value="qingqingtst"/>
+                <property name="password" value="qingqing@tst"/>
+            </bean>
+        </property>
+        <property name="user" value="qingqingtst"/>
+        <property name="password" value="qingqing@tst"/>
+    </bean>
+
     <bean id="qqStudy2DataSource_atomikos" class="com.atomikos.jdbc.AtomikosDataSourceBean" init-method="init" destroy-method="close">
         <property name="uniqueResourceName" value="ds_qq_study_2"/>
         <property name="xaDataSourceClassName" value="com.mysql.jdbc.jdbc2.optional.MysqlXADataSource"/>

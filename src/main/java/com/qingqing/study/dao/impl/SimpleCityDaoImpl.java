@@ -41,6 +41,18 @@ public class SimpleCityDaoImpl extends BaseDao implements SimpleCityDao {
         simpleCity.setId(keyHolder.getKey().longValue());
     }
 
+    public void insert(final SimpleCity simpleCity) {
+        super.getJdbcTemplate().getJdbcOperations().update(new PreparedStatementCreator() {
+            public PreparedStatement createPreparedStatement(Connection con)
+                    throws SQLException {
+                PreparedStatement preparedStatement = con.prepareStatement(INSERT_SQL_PARAM);
+                preparedStatement.setLong(1, simpleCity.getProvinceId());
+                preparedStatement.setString(2, simpleCity.getCityName());
+                return preparedStatement;
+            }
+        });
+    }
+
     public void update(SimpleCity simpleCity) {
         getJdbcTemplate().update(UPDATE_SQL, new MapSqlParameterSource(getParams(simpleCity)));
     }

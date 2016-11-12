@@ -9,6 +9,8 @@ public interface SimpleCityDao {
 
     void insertWithIdGenerate(SimpleCity simpleCity);
 
+    void insert(SimpleCity simpleCity);
+
     void update(SimpleCity simpleCity);
 
     void deleteById(Long id);

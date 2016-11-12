@@ -97,12 +97,12 @@
             <!--<artifactId>transactions-jta</artifactId>-->
             <!--<version>3.9.0</version>-->
         <!--</dependency>-->
-        <!--&lt;!&ndash;jotm用来实现分布式事务&ndash;&gt;-->
-        <dependency>
-            <groupId>jotm</groupId>
-            <artifactId>jotm</artifactId>
-            <version>1.4.3</version>
-        </dependency>
+        <!--jotm用来实现分布式事务-->
+        <!--<dependency>-->
+            <!--<groupId>jotm</groupId>-->
+            <!--<artifactId>jotm</artifactId>-->
+            <!--<version>1.4.3</version>-->
+        <!--</dependency>-->
         <!--<dependency>-->
             <!--<groupId>jotm</groupId>-->
             <!--<artifactId>objectweb-datasource</artifactId>-->

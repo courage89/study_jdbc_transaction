@@ -12,6 +12,9 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="atomikos-util-4.0.4" level="project" />
+    <orderEntry type="library" name="jotm-client" level="project" />
+    <orderEntry type="library" name="aspectjweaver" level="project" />
     <orderEntry type="library" name="Maven: commons-dbcp:commons-dbcp:1.4" level="project" />
     <orderEntry type="library" name="Maven: commons-pool:commons-pool:1.5.5" level="project" />
     <orderEntry type="library" name="Maven: mysql:mysql-connector-java:5.1.28" level="project" />
@@ -46,13 +49,10 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-tx:4.2.0.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring:2.5.6" level="project" />
     <orderEntry type="library" name="Maven: commons-logging:commons-logging:1.1.1" level="project" />
-    <orderEntry type="library" name="Maven: jotm:jotm:1.4.3" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.springframework:spring-test:4.2.0.RELEASE" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.12" level="project" />
     <orderEntry type="library" name="Maven: org.hamcrest:hamcrest-library:1.2.1" level="project" />
     <orderEntry type="library" name="Maven: org.hamcrest:hamcrest-core:1.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: mockit:jmockit:0.999.4" level="project" />
-    <orderEntry type="library" name="atomikos-util-4.0.4" level="project" />
-    <orderEntry type="library" name="jotm-client" level="project" />
   </component>
 </module>
