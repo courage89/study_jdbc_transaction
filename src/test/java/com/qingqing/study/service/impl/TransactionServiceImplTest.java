@@ -24,26 +24,52 @@ public class TransactionServiceImplTest extends TestBase {
     private TransactionService transactionService;
 
     @Test
-    public void testXaTransaction() throws IllegalAccessException {
+    public void testXaTransactionInsert() throws IllegalAccessException {
+
+        TransactionService ts = xaTransactionService;
         boolean execFail = true;
         SimpleUser su = getSimpleUser(1);
         SimpleCity sc = getSimpleCity(1);
-        xaTransactionService.insert(su, sc, execFail);
+        ts.insert(su, sc, execFail);
 
         if(su.getId() != null){
-            SimpleUser su1 = xaTransactionService.findSimpleUserById(su.getId());
+            SimpleUser su1 = ts.findSimpleUserById(su.getId());
             Assert.assertTrue(UnitTestEqualsUtil.isEquals(su, su1, "createTime", "lastUpdateTime"));
         }else{
             Assert.fail("insert simpleUser fail");
         }
 
         if(sc.getId() != null){
-            SimpleCity sc1 = xaTransactionService.findSimpleCityById(sc.getId());
+            SimpleCity sc1 = ts.findSimpleCityById(sc.getId());
             Assert.assertTrue(UnitTestEqualsUtil.isEquals(sc, sc1, "createTime", "lastUpdateTime"));
         }else{
             Assert.fail("insert simpleCity fail");
         }
     }
+
+    @Test
+    public void testXaTransactionNestedOperate() throws IllegalAccessException {
+        TransactionService ts = xaTransactionService;
+        boolean execFail = true;
+        SimpleUser su = getSimpleUser(2);
+        SimpleCity sc = getSimpleCity(2);
+        ts.nestedOperate(su, sc, execFail);
+
+        if(su.getId() != null){
+            SimpleUser su1 = ts.findSimpleUserById(su.getId());
+            Assert.assertTrue(UnitTestEqualsUtil.isEquals(su, su1, "createTime", "lastUpdateTime"));
+        }else{
+            Assert.fail("insert simpleUser fail");
+        }
+
+        if(sc.getId() != null){
+            SimpleCity sc1 = ts.findSimpleCityById(sc.getId());
+            Assert.assertTrue(UnitTestEqualsUtil.isEquals(sc, sc1, "createTime", "lastUpdateTime"));
+        }else{
+            Assert.fail("insert simpleCity fail");
+        }
+    }
+
 
     public SimpleUser getSimpleUser(int value) {
         SimpleUser simpleUser = new SimpleUser();

@@ -23,10 +23,29 @@
     </bean>
 
     <bean id="qqStudyBaseDao" class="com.qingqing.study.dao.BaseDao" abstract = "true">
-        <property name="dataSource" ref="qqStudyDataSource"/>
+        <property name="dataSource" ref="qqStudyDataSource_atomikos"/>
     </bean>
 
     <bean id="simpleUserDao" class="com.qingqing.study.dao.impl.SimpleUserDaoImpl" parent = "qqStudyBaseDao"/>
+
+    <bean id="qqStudyDataSource_atomikos" class="com.atomikos.jdbc.AtomikosDataSourceBean" init-method="init" destroy-method="close">
+        <property name="uniqueResourceName" value="ds_qq_study"/>
+        <property name="xaDataSourceClassName" value="com.mysql.jdbc.jdbc2.optional.MysqlXADataSource"/>
+        <property name="xaProperties">
+            <props>
+                <prop key="serverName">db.dev</prop>
+                <prop key="portNumber">3307</prop>
+                <prop key="databaseName">qq_study</prop>
+                <prop key="user">qingqingtst</prop>
+                <prop key="password">qingqing@tst</prop>
+            </props>
+        </property>
+        <property name="minPoolSize" value="10" />
+        <property name="maxPoolSize" value="100" />
+        <property name="borrowConnectionTimeout" value="30" />
+        <property name="testQuery" value="select 1" />
+        <property name="maintenanceInterval" value="60" />
+    </bean>
 
     <bean id="qqStudyDataSource" class="org.apache.commons.dbcp.BasicDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver">
@@ -63,7 +82,7 @@
 
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <qualifier value="transactionManager"/>
-        <property name="dataSource" ref="qqStudyDataSource" />
+        <property name="dataSource" ref="qqStudyDataSource_atomikos" />
     </bean>
     <tx:annotation-driven transaction-manager="transactionManager"/>
 </beans>

@@ -14,6 +14,8 @@ public interface TransactionService {
 
     void delete(Long userId, Long cityId, boolean execFail);
 
+    void nestedOperate(SimpleUser simpleUser, SimpleCity simpleCity, boolean execFail);
+
     SimpleUser findSimpleUserById(Long id);
 
     SimpleCity findSimpleCityById(Long id);

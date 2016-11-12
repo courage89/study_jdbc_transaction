@@ -20,13 +20,21 @@
         <property name="fileEncoding" value="utf-8"/>
     </bean>
 
-    <context:component-scan base-package="com.qingqing.study.service.*">
+    <context:component-scan base-package="com.qingqing.study.service.impl">
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
     </context:component-scan>
 
     <!-- JOTM实例 -->
-    <bean id="jotm" class="org.springframework.transaction.jta.JotmFactoryBean">
-        <property name="defaultTimeout" value="500000"/>
+    <!--<bean id="jotm" class="org.springframework.transaction.jta.JotmFactoryBean">-->
+        <!--<property name="defaultTimeout" value="500000"/>-->
+    <!--</bean>-->
+
+    <bean id="transactionService" class="com.qingqing.study.service.impl.TransactionServiceImpl">
+        <property name="transactionService" ref="transactionService"/>
+    </bean>
+
+    <bean id="xaTransactionService" class="com.qingqing.study.service.impl.XaTransactionServcieImpl">
+        <property name="transactionServcie" ref="xaTransactionService"/>
     </bean>
 
     <bean id="atomikosTransactionManager" class="com.atomikos.icatch.jta.UserTransactionManager"
@@ -38,14 +46,14 @@
         <property name="transactionTimeout" value="3000"/>
     </bean>
 
-    <!-- JTA事务管理器 -->
+    <!-- JTA - atomikos 事务管理器 -->
     <bean id="springTransactionManager" class="org.springframework.transaction.jta.JtaTransactionManager">
         <property name="transactionManager" ref="atomikosTransactionManager"/>
         <property name="userTransaction" ref="atomikosUserTransaction"/>
     </bean>
 
-    <!-- JTA事务管理器 -->
-    <bean id="jtaTransactionManager" class="org.springframework.transaction.jta.JtaTransactionManager">
-        <property name="userTransaction" ref="jotm"/>
-    </bean>
+    <!-- JTA- jotm事务管理器 -->
+    <!--<bean id="jtaTransactionManager" class="org.springframework.transaction.jta.JtaTransactionManager">-->
+        <!--<property name="userTransaction" ref="jotm"/>-->
+    <!--</bean>-->
 </beans>
