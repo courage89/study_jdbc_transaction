@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Created by xuya on 2016/11/6.
  */
-@Transactional(value = "atomikosTransactionManager", propagation = Propagation.REQUIRES_NEW)
+@Transactional(value = "atomikosTransactionManager", propagation = Propagation.REQUIRED)
 public class AtomikosTransactionServcieImpl implements TransactionService {
 
     private SimpleUserDao simpleUserDao;
