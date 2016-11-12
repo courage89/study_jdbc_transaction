@@ -31,13 +31,17 @@
 
     <bean id="transactionService" class="com.qingqing.study.service.impl.TransactionServiceImpl">
         <property name="transactionService" ref="transactionService"/>
+        <property name="simpleUserDao" ref="simpleUserDao"/>
+        <property name="simpleCityDao" ref="simpleCityDao"/>
     </bean>
 
-    <bean id="xaTransactionService" class="com.qingqing.study.service.impl.XaTransactionServcieImpl">
-        <property name="transactionServcie" ref="xaTransactionService"/>
+    <bean id="atomikosTransactionService" class="com.qingqing.study.service.impl.AtomikosTransactionServcieImpl">
+        <property name="transactionServcie" ref="atomikosTransactionService"/>
+        <property name="simpleUserDao" ref="simpleUserDao_atomikos"/>
+        <property name="simpleCityDao" ref="simpleCityDao_atomikos"/>
     </bean>
 
-    <bean id="atomikosTransactionManager" class="com.atomikos.icatch.jta.UserTransactionManager"
+    <bean id="atomikosUserTransactionManager" class="com.atomikos.icatch.jta.UserTransactionManager"
           init-method="init" destroy-method="close">
         <property name="forceShutdown" value="true"/>
     </bean>
@@ -47,8 +51,8 @@
     </bean>
 
     <!-- JTA - atomikos 事务管理器 -->
-    <bean id="springTransactionManager" class="org.springframework.transaction.jta.JtaTransactionManager">
-        <property name="transactionManager" ref="atomikosTransactionManager"/>
+    <bean id="atomikosTransactionManager" class="org.springframework.transaction.jta.JtaTransactionManager">
+        <property name="transactionManager" ref="atomikosUserTransactionManager"/>
         <property name="userTransaction" ref="atomikosUserTransaction"/>
     </bean>
 

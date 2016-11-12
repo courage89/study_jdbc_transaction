@@ -22,20 +22,22 @@
         <property name="fileEncoding" value="utf-8"/>
     </bean>
 
-    <bean id="qqStudyBaseDao" class="com.qingqing.study.dao.BaseDao" abstract = "true">
-        <property name="dataSource" ref="qqStudyDataSource_atomikos"/>
+    <bean id="simpleUserDao" class="com.qingqing.study.dao.impl.SimpleUserDaoImpl">
+        <property name="dataSource" ref="qqStudy1DataSource"/>
     </bean>
 
-    <bean id="simpleUserDao" class="com.qingqing.study.dao.impl.SimpleUserDaoImpl" parent = "qqStudyBaseDao"/>
+    <bean id="simpleUserDao_atomikos" class="com.qingqing.study.dao.impl.SimpleUserDaoImpl">
+        <property name="dataSource" ref="qqStudy1DataSource_atomikos"/>
+    </bean>
 
-    <bean id="qqStudyDataSource_atomikos" class="com.atomikos.jdbc.AtomikosDataSourceBean" init-method="init" destroy-method="close">
-        <property name="uniqueResourceName" value="ds_qq_study"/>
+    <bean id="qqStudy1DataSource_atomikos" class="com.atomikos.jdbc.AtomikosDataSourceBean" init-method="init" destroy-method="close">
+        <property name="uniqueResourceName" value="ds_qq_study_1"/>
         <property name="xaDataSourceClassName" value="com.mysql.jdbc.jdbc2.optional.MysqlXADataSource"/>
         <property name="xaProperties">
             <props>
                 <prop key="serverName">db.dev</prop>
                 <prop key="portNumber">3307</prop>
-                <prop key="databaseName">qq_study</prop>
+                <prop key="databaseName">qq_study_1</prop>
                 <prop key="user">qingqingtst</prop>
                 <prop key="password">qingqing@tst</prop>
             </props>
@@ -47,11 +49,11 @@
         <property name="maintenanceInterval" value="60" />
     </bean>
 
-    <bean id="qqStudyDataSource" class="org.apache.commons.dbcp.BasicDataSource">
+    <bean id="qqStudy1DataSource" class="org.apache.commons.dbcp.BasicDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver">
         </property>
         <property name="url">
-            <value>${database.study.url}</value>
+            <value>${database.study.db1.url}</value>
         </property>
         <property name="username">
             <value>${database.study.username}</value>
@@ -80,9 +82,9 @@
         </property>
     </bean>
 
-    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <qualifier value="transactionManager"/>
-        <property name="dataSource" ref="qqStudyDataSource_atomikos" />
+    <bean id="transactionManager1" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <qualifier value="transactionManager1"/>
+        <property name="dataSource" ref="qqStudy1DataSource" />
     </bean>
-    <tx:annotation-driven transaction-manager="transactionManager"/>
+    <tx:annotation-driven transaction-manager="transactionManager1"/>
 </beans>

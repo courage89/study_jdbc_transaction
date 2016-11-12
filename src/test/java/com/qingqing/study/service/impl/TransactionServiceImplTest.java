@@ -50,6 +50,7 @@ public class TransactionServiceImplTest extends TestBase {
     @Test
     public void testXaTransactionNestedOperate() throws IllegalAccessException {
         TransactionService ts = xaTransactionService;
+//        TransactionService ts = transactionService;
         boolean execFail = true;
         SimpleUser su = getSimpleUser(2);
         SimpleCity sc = getSimpleCity(2);

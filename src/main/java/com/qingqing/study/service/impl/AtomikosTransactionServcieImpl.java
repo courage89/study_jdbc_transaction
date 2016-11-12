@@ -5,22 +5,17 @@ import com.qingqing.study.dao.SimpleUserDao;
 import com.qingqing.study.domain.SimpleCity;
 import com.qingqing.study.domain.SimpleUser;
 import com.qingqing.study.service.TransactionService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created by xuya on 2016/11/6.
  */
-@Transactional(value = "springTransactionManager")
-public class XaTransactionServcieImpl implements TransactionService {
+@Transactional(value = "atomikosTransactionManager", propagation = Propagation.REQUIRES_NEW)
+public class AtomikosTransactionServcieImpl implements TransactionService {
 
-    @Autowired
     private SimpleUserDao simpleUserDao;
 
-    @Autowired
     private SimpleCityDao simpleCityDao;
 
     private TransactionService transactionServcie;
@@ -30,7 +25,7 @@ public class XaTransactionServcieImpl implements TransactionService {
         simpleUserDao.insertWithIdGenerate(simpleUser);
 
         if (execFail) {
-            throw new RuntimeException("XaTransactionServcieImpl exec insert fail");
+            throw new RuntimeException("AtomikosTransactionServcieImpl exec insert fail");
         }
     }
 
@@ -39,7 +34,7 @@ public class XaTransactionServcieImpl implements TransactionService {
         simpleCityDao.update(simpleCity);
 
         if (execFail) {
-            throw new RuntimeException("XaTransactionServcieImpl exec update fail");
+            throw new RuntimeException("AtomikosTransactionServcieImpl exec update fail");
         }
     }
 
@@ -48,17 +43,19 @@ public class XaTransactionServcieImpl implements TransactionService {
         simpleCityDao.deleteById(cityId);
 
         if (execFail) {
-            throw new RuntimeException("XaTransactionServcieImpl exec delete fail");
+            throw new RuntimeException("AtomikosTransactionServcieImpl exec delete fail");
         }
     }
 
-    public void nestedOperate(SimpleUser simpleUser, SimpleCity simpleCity, boolean execFail){
+    public void nestedOperate(SimpleUser simpleUser, SimpleCity simpleCity, boolean execFail) {
         this.insert(simpleUser, simpleCity, false);
+
         simpleUser.setAge(simpleUser.getAge() + 100);
         simpleCity.setProvinceId(simpleCity.getProvinceId() + 100);
-        transactionServcie.update(simpleUser, simpleCity, false);
+
+        transactionServcie.insert(simpleUser, simpleCity, false);
         if (execFail) {
-            throw new RuntimeException("XaTransactionServcieImpl exec nextedOperate fail");
+            throw new RuntimeException("AtomikosTransactionServcieImpl exec nextedOperate fail");
         }
     }
 
@@ -72,5 +69,13 @@ public class XaTransactionServcieImpl implements TransactionService {
 
     public void setTransactionServcie(TransactionService transactionServcie) {
         this.transactionServcie = transactionServcie;
+    }
+
+    public void setSimpleUserDao(SimpleUserDao simpleUserDao) {
+        this.simpleUserDao = simpleUserDao;
+    }
+
+    public void setSimpleCityDao(SimpleCityDao simpleCityDao) {
+        this.simpleCityDao = simpleCityDao;
     }
 }

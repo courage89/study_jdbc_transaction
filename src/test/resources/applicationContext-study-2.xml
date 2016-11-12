@@ -11,20 +11,22 @@
               http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
              http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
 
-    <bean id="qqStudyXaBaseDao" class="com.qingqing.study.dao.BaseDao" abstract = "true">
-        <property name="dataSource" ref="qqStudyXaDataSource_atomikos"/>
+    <bean id="simpleCityDao" class="com.qingqing.study.dao.impl.SimpleCityDaoImpl">
+        <property name="dataSource" ref="qqStudy2DataSource"/>
     </bean>
 
-    <bean id="simpleCityDao" class="com.qingqing.study.dao.impl.SimpleCityDaoImpl" parent = "qqStudyXaBaseDao"/>
+    <bean id="simpleCityDao_atomikos" class="com.qingqing.study.dao.impl.SimpleCityDaoImpl">
+        <property name="dataSource" ref="qqStudy2DataSource_atomikos"/>
+    </bean>
 
-    <bean id="qqStudyXaDataSource_atomikos" class="com.atomikos.jdbc.AtomikosDataSourceBean" init-method="init" destroy-method="close">
-        <property name="uniqueResourceName" value="ds_qq_study_xa"/>
+    <bean id="qqStudy2DataSource_atomikos" class="com.atomikos.jdbc.AtomikosDataSourceBean" init-method="init" destroy-method="close">
+        <property name="uniqueResourceName" value="ds_qq_study_2"/>
         <property name="xaDataSourceClassName" value="com.mysql.jdbc.jdbc2.optional.MysqlXADataSource"/>
         <property name="xaProperties">
             <props>
                 <prop key="serverName">db.dev</prop>
                 <prop key="portNumber">3307</prop>
-                <prop key="databaseName">qq_study_xa</prop>
+                <prop key="databaseName">qq_study_2</prop>
                 <prop key="user">qingqingtst</prop>
                 <prop key="password">qingqing@tst</prop>
             </props>
@@ -36,17 +38,17 @@
         <property name="maintenanceInterval" value="60" />
     </bean>
 
-    <bean id="qqStudyXaDataSource" class="org.apache.commons.dbcp.BasicDataSource">
+    <bean id="qqStudy2DataSource" class="org.apache.commons.dbcp.BasicDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver">
         </property>
         <property name="url">
-            <value>${database.study.xa.url}</value>
+            <value>${database.study.db2.url}</value>
         </property>
         <property name="username">
-            <value>${database.study.xa.username}</value>
+            <value>${database.study.db2.username}</value>
         </property>
         <property name="password">
-            <value>${database.study.xa.password}</value>
+            <value>${database.study.db2.password}</value>
         </property>
         <!--maxIdle: 最大空闲连接 -->
         <property name="maxIdle" value="10"/>
@@ -69,11 +71,11 @@
         </property>
     </bean>
 
-    <bean id="xaTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <qualifier value="xaTransactionManager"/>
-        <property name="dataSource" ref="qqStudyXaDataSource_atomikos" />
+    <bean id="transactionManager2" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <qualifier value="transactionManager2"/>
+        <property name="dataSource" ref="qqStudy2DataSource" />
     </bean>
 
-    <tx:annotation-driven transaction-manager="xaTransactionManager"/>
+    <tx:annotation-driven transaction-manager="transactionManager2"/>
 
 </beans>
