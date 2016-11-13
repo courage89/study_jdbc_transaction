@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Created by xuya on 2016/11/6.
  */
-@Transactional(value = "transactionManager1")
+@Transactional(value = "transactionManager1", propagation = Propagation.REQUIRED)
 public class TransactionServiceImpl implements TransactionService {
 
     private SimpleUserDao simpleUserDao;
@@ -20,13 +20,19 @@ public class TransactionServiceImpl implements TransactionService {
 
     private TransactionService transactionService;
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void insert(SimpleUser simpleUser, SimpleCity simpleCity, boolean execFail) {
         simpleCityDao.insertWithIdGenerate(simpleCity);
         simpleUserDao.insertWithIdGenerate(simpleUser);
-
         if (execFail) {
             throw new RuntimeException("transactionService exec insert fail");
+        }
+    }
+
+    public void insertWithCatch(SimpleUser simpleUser, SimpleCity simpleCity, boolean execFail) {
+        try {
+            this.insert(simpleUser, simpleCity, execFail);
+        } catch (RuntimeException e) {
+            e.printStackTrace();
         }
     }
 

@@ -29,6 +29,14 @@ public class AtomikosTransactionServiceImpl implements TransactionService {
         }
     }
 
+    public void insertWithCatch(SimpleUser simpleUser, SimpleCity simpleCity, boolean execFail) {
+        try {
+            this.insert(simpleUser, simpleCity, execFail);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void update(SimpleUser simpleUser, SimpleCity simpleCity, boolean execFail) {
         simpleUserDao.update(simpleUser);
         simpleCityDao.update(simpleCity);

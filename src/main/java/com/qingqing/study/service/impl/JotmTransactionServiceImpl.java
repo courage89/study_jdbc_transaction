@@ -23,9 +23,16 @@ public class JotmTransactionServiceImpl implements TransactionService {
     public void insert(SimpleUser simpleUser, SimpleCity simpleCity, boolean execFail) {
         simpleCityDao.insert(simpleCity);
         simpleUserDao.insert(simpleUser);
-
         if (execFail) {
             throw new RuntimeException("transactionService exec insert fail");
+        }
+    }
+
+    public void insertWithCatch(SimpleUser simpleUser, SimpleCity simpleCity, boolean execFail) {
+        try {
+            this.insert(simpleUser, simpleCity, execFail);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

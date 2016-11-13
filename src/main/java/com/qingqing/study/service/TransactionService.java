@@ -10,6 +10,8 @@ public interface TransactionService {
 
     void insert(SimpleUser simpleUser, SimpleCity simpleCity, boolean execFail);
 
+    void insertWithCatch(SimpleUser simpleUser, SimpleCity simpleCity, boolean execFail);
+
     void update(SimpleUser simpleUser, SimpleCity simpleCity, boolean execFail);
 
     void delete(Long userId, Long cityId, boolean execFail);
