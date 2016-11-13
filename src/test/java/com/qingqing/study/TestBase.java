@@ -11,7 +11,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
         "classpath:applicationContext.xml",
-        "classpath:applicationContext-activemq.xml",
+//        "classpath:applicationContext-activemq.xml",
+        "classpath:applicationContext-activemq-xa.xml",
         "classpath:applicationContext-db-study-1.xml",
         "classpath:applicationContext-db-study-2.xml"
 })
