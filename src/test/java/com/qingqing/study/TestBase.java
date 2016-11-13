@@ -11,8 +11,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
         "classpath:applicationContext.xml",
-        "classpath:applicationContext-study-1.xml",
-        "classpath:applicationContext-study-2.xml"
+        "classpath:applicationContext-activemq.xml",
+        "classpath:applicationContext-db-study-1.xml",
+        "classpath:applicationContext-db-study-2.xml"
 })
 public class TestBase {
     protected void printJson(Object object) {

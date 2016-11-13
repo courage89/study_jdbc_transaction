@@ -55,10 +55,10 @@
             <artifactId>spring-expression</artifactId>
             <version>${org.springframework.version}</version>
             <!--<exclusions>-->
-                <!--<exclusion>-->
-                    <!--<groupId>*</groupId>-->
-                    <!--<artifactId>*</artifactId>-->
-                <!--</exclusion>-->
+            <!--<exclusion>-->
+            <!--<groupId>*</groupId>-->
+            <!--<artifactId>*</artifactId>-->
+            <!--</exclusion>-->
             <!--</exclusions>-->
         </dependency>
         <dependency>
@@ -66,10 +66,10 @@
             <artifactId>spring-jdbc</artifactId>
             <version>${org.springframework.version}</version>
             <!--<exclusions>-->
-                <!--<exclusion>-->
-                    <!--<groupId>*</groupId>-->
-                    <!--<artifactId>*</artifactId>-->
-                <!--</exclusion>-->
+            <!--<exclusion>-->
+            <!--<groupId>*</groupId>-->
+            <!--<artifactId>*</artifactId>-->
+            <!--</exclusion>-->
             <!--</exclusions>-->
         </dependency>
         <dependency>
@@ -77,36 +77,30 @@
             <artifactId>spring-tx</artifactId>
             <version>${org.springframework.version}</version>
             <!--<exclusions>-->
-                <!--<exclusion>-->
-                    <!--<groupId>*</groupId>-->
-                    <!--<artifactId>*</artifactId>-->
-                <!--</exclusion>-->
+            <!--<exclusion>-->
+            <!--<groupId>*</groupId>-->
+            <!--<artifactId>*</artifactId>-->
+            <!--</exclusion>-->
             <!--</exclusions>-->
         </dependency>
 
-        <!--spring利用jotm来实现分布式事务-->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring</artifactId>
-            <version>2.5.6</version>
-        </dependency>
 
         <!--atomikos用来实现分布式事务-->
         <!--<dependency>-->
-            <!--<groupId>com.atomikos</groupId>-->
-            <!--<artifactId>transactions-jta</artifactId>-->
-            <!--<version>3.9.0</version>-->
+        <!--<groupId>com.atomikos</groupId>-->
+        <!--<artifactId>transactions-jta</artifactId>-->
+        <!--<version>3.9.0</version>-->
         <!--</dependency>-->
         <!--jotm用来实现分布式事务-->
         <!--<dependency>-->
-            <!--<groupId>jotm</groupId>-->
-            <!--<artifactId>jotm</artifactId>-->
-            <!--<version>1.4.3</version>-->
+        <!--<groupId>jotm</groupId>-->
+        <!--<artifactId>jotm</artifactId>-->
+        <!--<version>1.4.3</version>-->
         <!--</dependency>-->
         <!--<dependency>-->
-            <!--<groupId>jotm</groupId>-->
-            <!--<artifactId>objectweb-datasource</artifactId>-->
-            <!--<version>1.4.3</version>-->
+        <!--<groupId>jotm</groupId>-->
+        <!--<artifactId>objectweb-datasource</artifactId>-->
+        <!--<version>1.4.3</version>-->
         <!--</dependency>-->
         <!--&lt;!&ndash;jotm用来实现分布式事务&ndash;&gt;-->
 
@@ -154,6 +148,41 @@
             <scope>test</scope>
         </dependency>
         <!--spring和Junit组合的测试包-end-->
+
+
+        <!--activemq依赖-->
+        <dependency>
+            <groupId>javax.jms</groupId>
+            <artifactId>jms</artifactId>
+            <version>1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-core</artifactId>
+            <version>5.5.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-pool</artifactId>
+            <version>5.7.0</version>
+        </dependency>
+        <!--activemq依赖-->
+
+        <!-- spring-jms -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jms</artifactId>
+            <version>${org.springframework.version}</version>
+        </dependency>
+        <!-- spring-jms -->
+
+        <!--spring利用jotm来实现分布式事务-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring</artifactId>
+            <version>2.5.6</version>
+        </dependency>
+
 
     </dependencies>
 
