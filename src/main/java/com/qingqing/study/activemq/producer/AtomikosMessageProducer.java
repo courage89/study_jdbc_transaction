@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.jms.Destination;
 import javax.jms.JMSException;
@@ -14,8 +15,12 @@ import java.util.List;
 
 /**
  * Created by xuya on 2016/11/12.
+ * 注意：
+ * 1、若使用com.atomikos.jms.AtomikosConnectionFactoryBean，这里的@Transaction的助记符不能少，因为AtomikosConnectionFactoryBean必须依赖于分布式事务的上下文。
+ * 2、若使用org.springframework.jms.connection.CachingConnectionFactory， 则不需要天下@Transaction的助记符。
  */
-public class SimpleMessageProducer implements IMessageProducer{
+@Transactional(value="atomikosTransactionManager")
+public class AtomikosMessageProducer implements IMessageProducer {
 
     protected JmsTemplate jmsTemplate;
 
@@ -23,7 +28,7 @@ public class SimpleMessageProducer implements IMessageProducer{
 
     private List<String> destQueueNames;
 
-    private static final Logger logger = LoggerFactory.getLogger(SimpleMessageProducer.class);
+    private static final Logger logger = LoggerFactory.getLogger(AtomikosMessageProducer.class);
 
     public void sendMessages(boolean execFail) throws JMSException {
         for (int i = 1; i <= numberOfMessages; ++i) {
@@ -32,7 +37,7 @@ public class SimpleMessageProducer implements IMessageProducer{
             jmsTemplate.convertAndSend(getDestination(index), getMessage(index));
         }
 
-        if (execFail) {
+        if(execFail){
             throw new RuntimeException("send message fail");
         }
     }

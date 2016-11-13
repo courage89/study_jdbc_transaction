@@ -62,5 +62,11 @@
 
     <bean id="simpleMessageProducer" class="com.qingqing.study.activemq.producer.SimpleMessageProducer">
         <property name="destQueueNames" ref="destQueueNames"/>
+        <property name="jmsTemplate" ref="jmsTemplate"/>
+    </bean>
+
+    <bean id="activeMqManager" class="com.qingqing.study.manager.ActiveMqManager">
+        <property name="messageProducer" ref="simpleMessageProducer"/>
+        <property name="transactionService" ref="transactionService"/>
     </bean>
 </beans>

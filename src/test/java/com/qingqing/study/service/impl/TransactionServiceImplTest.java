@@ -72,19 +72,4 @@ public class TransactionServiceImplTest extends TestBase {
             Assert.assertTrue(UnitTestEqualsUtil.isEquals(sc, sc1, "createTime", "lastUpdateTime"));
         }
     }
-
-
-    public SimpleUser getSimpleUser(int value) {
-        SimpleUser simpleUser = new SimpleUser();
-        simpleUser.setAge(value);
-        simpleUser.setName("name" + value);
-        return simpleUser;
-    }
-
-    public SimpleCity getSimpleCity(long value) {
-        SimpleCity simpleCity = new SimpleCity();
-        simpleCity.setProvinceId(value);
-        simpleCity.setCityName("cityName:" + value);
-        return simpleCity;
-    }
 }
