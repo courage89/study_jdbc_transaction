@@ -17,21 +17,23 @@
     </bean>
 
     <!-- A POJO that implements the JMS message listener -->
-    <!--<bean id="simpleMessageListener" class="com.qingqing.study.activemq.listener.SimpleMessageListener">-->
-        <!--<property name="messageConverter" ref="qqMsgJsonConverter"/>-->
-    <!--</bean>-->
+    <bean id="simpleMessageListener" class="com.qingqing.study.activemq.listener.SimpleMessageListener">
+        <property name="messageConverter" ref="qqMsgJsonConverter"/>
+    </bean>
 
-    <!-- A pure Spring configuration for the message listener container -->
-    <!--<bean id="msgListenerContainer"-->
-          <!--class="org.springframework.jms.listener.DefaultMessageListenerContainer"-->
-          <!--p:connectionFactory-ref="amqConnectionFactory"-->
-          <!--p:destination-ref="destination"-->
-          <!--p:messageListener-ref="simpleMessageListener"-->
-          <!--p:concurrentConsumers="10"-->
-          <!--p:maxConcurrentConsumers="50"-->
-          <!--p:receiveTimeout="5000"-->
-          <!--p:idleTaskExecutionLimit="10"-->
-          <!--p:idleConsumerLimit="5"/>-->
+     <!--A pure Spring configuration for the message listener container-->
+    <bean id="msgListenerContainer"
+          class="org.springframework.jms.listener.DefaultMessageListenerContainer"
+          p:connectionFactory-ref="amqConnectionFactory"
+          p:destination-ref="destination"
+          p:messageListener-ref="simpleMessageListener"
+          p:concurrentConsumers="10"
+          p:maxConcurrentConsumers="50"
+          p:receiveTimeout="5000"
+          p:idleTaskExecutionLimit="10"
+          p:transactionManager-ref="atomikosTransactionManager"
+          p:idleConsumerLimit="5">
+            </bean>
 
     <!-- A destination in ActiveMQ -->
     <bean id="destination" class="org.apache.activemq.command.ActiveMQQueue">

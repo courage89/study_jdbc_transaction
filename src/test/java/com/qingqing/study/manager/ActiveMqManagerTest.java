@@ -24,7 +24,7 @@ public class ActiveMqManagerTest extends TestBase {
 
     @Test
     public void testSendMsg() throws InterruptedException, JMSException {
-        messageProducer.sendMessages(false);
+        messageProducer.sendMessages(true);
         TimeUnit.SECONDS.sleep(5);
     }
 
@@ -32,7 +32,7 @@ public class ActiveMqManagerTest extends TestBase {
     public void testXa() throws JMSException, InterruptedException {
         SimpleUser su = getSimpleUser(2);
         SimpleCity sc = getSimpleCity(2);
-        activeMqManager.doXaInDbAndMq(su, sc, true);
+        activeMqManager.doXaInDbAndMq(su, sc, false);
 
         TimeUnit.SECONDS.sleep(5);
     }

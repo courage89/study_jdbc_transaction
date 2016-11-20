@@ -30,7 +30,7 @@ public class TransactionServiceImplTest extends TestBase {
     @Test
     public void testXaTransactionInsert() throws IllegalAccessException {
 
-        TransactionService ts = atomikosTransactionService;
+        TransactionService ts = transactionService;
         boolean execFail = true;
         SimpleUser su = getSimpleUser(1);
         SimpleCity sc = getSimpleCity(1);

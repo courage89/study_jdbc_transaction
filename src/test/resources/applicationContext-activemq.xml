@@ -36,7 +36,7 @@
 
     <!-- A destination in ActiveMQ -->
     <bean id="destination" class="org.apache.activemq.command.ActiveMQQueue">
-        <constructor-arg value="${activemq.destination.queuename.1}"/>
+        <constructor-arg value="${activemq.destination.queuename.2}"/>
     </bean>
     <!-- A JmsTemplate instance that uses the cached connection and destination -->
     <bean id="jmsTemplate"
